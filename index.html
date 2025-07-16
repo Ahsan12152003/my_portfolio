@@ -5,319 +5,218 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahsan Javed - Portfolio</title>
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: url('background.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #ffffff;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a14;
+            color: #ffffff;
             overflow-x: hidden;
             scroll-behavior: smooth;
-            position: relative;
         }
-        header {
-            text-align: center;
-            padding: 50px 20px;
-            background: rgba(10, 10, 20, 0.85);
-            animation: slideInFromTop 1s ease-out;
-            box-shadow: 0 5px 25px rgba(0, 195, 255, 0.5);
-            position: relative;
-            overflow: hidden;
-            border-bottom: 4px solid #00c3ff;
-            max-width: 900px;
-            margin: 0 auto;
-            border-radius: 0 0 20px 20px;
-        }
-        header::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 195, 255, 0.4), transparent);
-            animation: glowPulse 3s infinite ease-in-out;
-            z-index: 0;
-        }
-        header::before {
-            content: '';
-            position: absolute;
+        canvas {
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(0, 195, 255, 0.3), rgba(255, 153, 0, 0.3));
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            z-index: 0;
-        }
-        header:hover::before, header:active::before { /* Added :active for mobile tap */
-            opacity: 1;
-        }
-        header img {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
-            border: 6px solid #00c3ff;
-            animation: spinGlow 6s linear infinite, bounceIn 1.5s ease-out;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 0 30px rgba(0, 195, 255, 0.9);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-        header:hover img, header:active img { /* Added :active for mobile */
-            transform: scale(1.15);
-            box-shadow: 0 0 40px rgba(255, 153, 0, 0.9);
-        }
-        header h1 {
-            font-size: 2.2em;
-            animation: bounceIn 1.5s ease-out, glowText 2s infinite;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 0 25px rgba(0, 195, 255, 1);
-            letter-spacing: 3px;
-            margin: 0;
-            background: linear-gradient(45deg, #00c3ff, #ff9900); /* Added gradient text */
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        header p {
-            font-size: 1.1em;
-            animation: fadeInUp 2s ease-out;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 0 15px rgba(255, 153, 0, 0.7);
-            margin: 10px 0 0;
+            z-index: -1;
         }
         .container {
-            width: 90%;
             max-width: 1200px;
             margin: auto;
             padding: 20px;
+            position: relative;
+            z-index: 1;
         }
-        .section {
-            margin: 30px 0;
-            padding: 20px;
-            background: rgba(15, 15, 25, 0.95);
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(20, 20, 30, 0.9), rgba(30, 30, 40, 0.8));
             border-radius: 20px;
-            opacity: 0;
-            transform: translateY(60px) scale(0.9);
-            transition: all 0.8s ease-out;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 10px 40px rgba(0, 150, 200, 0.4);
+            margin: 20px auto;
+            max-width: 900px;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(0, 195, 255, 0.3);
         }
-        .section.visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-        .section:hover, .section:active { /* Added :active for mobile */
-            box-shadow: 0 12px 35px rgba(0, 195, 255, 0.7);
-            border-color: #ff9900;
-        }
-        .section::before {
-            content: '';
+        header .motion-graphics {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(0, 195, 255, 0.15), rgba(255, 153, 0, 0.15));
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            z-index: 0;
+            pointer-events: none;
+            opacity: 0.6;
         }
-        .section:hover::before, .section:active::before {
-            opacity: 1;
-        }
-        .about-text {
-            text-align: justify; /* Proper alignment */
-            line-height: 1.6; /* Better readability */
-            padding: 10px;
-            background: rgba(20, 20, 30, 0.5); /* Subtle background for contrast */
-            border-radius: 10px;
-            box-shadow: inset 0 0 15px rgba(0, 195, 255, 0.3); /* Inner glow */
-        }
-        h1, h2 {
-            color: #00c3ff;
-            text-transform: uppercase;
-            text-shadow: 0 0 15px rgba(0, 195, 255, 0.8);
-        }
-        h2 {
-            animation: pulse 2s infinite;
-            position: relative;
-            z-index: 1;
-            font-size: 1.5em;
-        }
-        a {
-            color: #00c3ff;
-            text-decoration: none;
-            transition: all 0.3s ease;
+        header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #00b7cc;
+            box-shadow: 0 0 20px rgba(0, 150, 200, 0.6);
+            transition: transform 0.5s ease;
             position: relative;
             z-index: 1;
         }
-        a:hover, a:active {
-            color: #ff9900;
-            text-shadow: 0 0 8px #ff9900;
+        header img:hover {
+            transform: scale(1.15) rotate(10deg);
         }
-        a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -6px;
-            left: 0;
-            background-color: #ff9900;
-            transition: width 0.3s ease;
+        header h1 {
+            font-size: 2.8em;
+            background: linear-gradient(45deg, #00b7cc, #ffca28);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(0, 150, 200, 0.5);
+            margin: 15px 0;
+            animation: textGlow 3s infinite ease-in-out;
+            position: relative;
+            z-index: 1;
         }
-        a:hover::after, a:active::after {
-            width: 100%;
+        header p {
+            font-size: 1.3em;
+            color: #d1d9e6;
+            position: relative;
+            z-index: 1;
         }
-        .projects, .certifications {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-        .project, .certificate {
-            width: calc(33.33% - 20px);
-            background: rgba(20, 20, 30, 0.95);
-            padding: 15px;
+        .section {
+            margin: 40px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(30, 30, 40, 0.8), rgba(20, 20, 30, 0.9));
             border-radius: 15px;
-            text-align: center;
-            transition: all 0.5s ease;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 8px 30px rgba(0, 150, 200, 0.3);
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(0, 195, 255, 0.3);
+            transition: transform 0.5s ease;
         }
-        .project:hover, .project:active, .certificate:hover, .certificate:active {
-            transform: translateY(-15px) scale(1.05);
-            box-shadow: 0 15px 30px rgba(0, 195, 255, 0.6);
-            border-color: #ff9900;
+        .section:hover {
+            transform: translateY(-10px);
         }
-        .project::before, .certificate::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 195, 255, 0.25), transparent);
-            opacity: 0;
-            transition: all 0.5s ease;
-            z-index: 0;
+        .section h2 {
+            font-size: 1.8em;
+            background: linear-gradient(45deg, #00b7cc, #ffca28);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
         }
-        .project:hover::before, .project:active::before, .certificate:hover::before, .certificate:active::before {
-            opacity: 1;
-            transform: scale(1.2);
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            position: relative;
         }
-        .project img, .certificate img {
-            max-width: 100%;
+        .card {
+            background: linear-gradient(135deg, rgba(40, 40, 50, 0.9), rgba(20, 20, 30, 0.95));
+            padding: 20px;
             border-radius: 10px;
-            height: auto;
-            transition: all 0.4s ease;
+            border: 2px solid rgba(0, 150, 200, 0.4);
+            box-shadow: 0 5px 20px rgba(0, 150, 200, 0.2);
+            text-align: center;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            min-height: 280px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 150, 200, 0.4);
+            border-color: #ffca28;
+        }
+        .card img {
+            width: 200px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: transform 0.5s ease;
             position: relative;
             z-index: 1;
-            filter: brightness(90%);
         }
-        .project:hover img, .project:active img, .certificate:hover img, .certificate:active img {
+        .card:hover img {
             transform: scale(1.1);
-            filter: brightness(110%);
-            box-shadow: 0 0 20px rgba(255, 153, 0, 0.7);
         }
-        .project h3, .certificate h3 {
+        .card h3 {
+            font-size: 1.2em;
             color: #ffffff;
-            text-shadow: 0 0 5px rgba(0, 195, 255, 0.5);
-            transition: all 0.3s ease;
+            margin-bottom: 15px;
             position: relative;
             z-index: 1;
-            font-size: 1.1em;
         }
-        .project:hover h3, .project:active h3, .certificate:hover h3, .certificate:active h3 {
-            color: #ff9900;
-            text-shadow: 0 0 10px rgba(255, 153, 0, 0.8);
+        .section .motion-graphics {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.6;
+            transition: opacity 0.5s ease;
+        }
+        .section:hover .motion-graphics {
+            opacity: 0.9;
+        }
+        .motion-graphics canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
         .btn {
             display: inline-block;
             padding: 10px 20px;
-            margin-top: 10px;
-            background: linear-gradient(45deg, #00c3ff, #00aaff);
-            color: #121212;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            background: linear-gradient(45deg, #00b7cc, #00aaff);
+            color: #ffffff;
+            border-radius: 6px;
+            text-decoration: none;
             transition: all 0.4s ease;
             position: relative;
-            overflow: hidden;
             z-index: 1;
-            box-shadow: 0 0 10px rgba(0, 195, 255, 0.5);
+            overflow: hidden;
         }
-        .btn:hover, .btn:active {
-            background: linear-gradient(45deg, #ff9900, #ffbb33);
-            transform: scale(1.15);
-            box-shadow: 0 0 20px rgba(255, 153, 0, 0.8);
-            color: #ffffff;
-        }
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.5s ease, height 0.5s ease;
-            z-index: -1;
-        }
-        .btn:hover::after, .btn:active::after {
-            width: 300%;
-            height: 300%;
+        .btn:hover {
+            background: linear-gradient(45deg, #ffca28, #ffb74d);
+            transform: scale(1.1);
         }
         .popup {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
-            background: rgba(15, 15, 25, 0.95);
+            background: linear-gradient(135deg, rgba(20, 20, 30, 0.9), rgba(30, 30, 40, 0.8));
             padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0, 195, 255, 0.5);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 150, 200, 0.3);
+            border: 2px solid #00b7cc;
             z-index: 1000;
-            display: none;
             width: 90%;
-            max-width: 500px; /* Reduced for mobile */
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            display: none;
             color: #ffffff;
-            transition: transform 0.5s ease;
-            border: 2px solid #00c3ff;
-            backdrop-filter: blur(5px);
-            overflow-y: auto; /* Scroll if too tall */
-            max-height: 80vh; /* Limit height */
         }
         .popup.visible {
             display: block;
             transform: translate(-50%, -50%) scale(1);
+            transition: transform 0.5s ease;
         }
         .popup h2 {
-            margin-top: 0;
-            font-size: 1.5em;
-            text-shadow: 0 0 15px rgba(0, 195, 255, 0.8);
-            background: linear-gradient(45deg, #00c3ff, #ff9900);
+            font-size: 1.6em;
+            background: linear-gradient(45deg, #00b7cc, #ffca28);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            margin-bottom: 15px;
         }
         .popup p {
-            font-size: 1em;
-            line-height: 1.6;
-            text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+            font-size: 1.1em;
+            color: #d1d9e6;
+            margin-bottom: 20px;
         }
         .overlay {
             position: fixed;
@@ -335,155 +234,97 @@
             display: block;
             opacity: 1;
         }
-
-        /* Animations */
-        @keyframes slideInFromTop {
-            0% { transform: translateY(-100%); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
+        @keyframes pulseGlow {
+            0% { opacity: 0.3; transform: scale(0.9); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+            100% { opacity: 0.3; transform: scale(0.9); }
         }
-        @keyframes bounceIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            60% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(1); }
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 15px rgba(0, 150, 200, 0.5); }
+            50% { text-shadow: 0 0 30px rgba(0, 150, 200, 0.7); }
+            100% { text-shadow: 0 0 15px rgba(0, 150, 200, 0.5); }
         }
-        @keyframes fadeInUp {
-            0% { transform: translateY(30px); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes spinGlow {
-            0% { border-color: #00c3ff; box-shadow: 0 0 30px rgba(0, 195, 255, 0.9); }
-            50% { border-color: #ff9900; box-shadow: 0 0 30px rgba(255, 153, 0, 0.9); }
-            100% { border-color: #00c3ff; box-shadow: 0 0 30px rgba(0, 195, 255, 0.9); }
-        }
-        @keyframes pulse {
-            0% { text-shadow: 0 0 10px rgba(0, 195, 255, 0.7); }
-            50% { text-shadow: 0 0 25px rgba(0, 195, 255, 1); }
-            100% { text-shadow: 0 0 10px rgba(0, 195, 255, 0.7); }
-        }
-        @keyframes glowPulse {
-            0% { opacity: 0.2; transform: scale(0.9); }
-            50% { opacity: 0.6; transform: scale(1.1); }
-            100% { opacity: 0.2; transform: scale(0.9); }
-        }
-        @keyframes glowText {
-            0% { text-shadow: 0 0 15px rgba(0, 195, 255, 0.7); }
-            50% { text-shadow: 0 0 35px rgba(0, 195, 255, 1), 0 0 50px rgba(255, 153, 0, 0.6); }
-            100% { text-shadow: 0 0 15px rgba(0, 195, 255, 0.7); }
-        }
-
-        /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            header {
-                padding: 30px 15px;
-            }
-            header img {
-                width: 100px;
-                height: 100px;
-                margin-bottom: 15px;
-            }
-            header h1 {
-                font-size: 1.8em;
-                letter-spacing: 2px;
-            }
-            header p {
-                font-size: 0.9em;
-                margin-top: 8px;
-            }
-            .container {
-                width: 95%;
-                padding: 10px;
-            }
-            .section {
-                margin: 20px 0;
-                padding: 15px;
-            }
-            h2 {
-                font-size: 1.2em;
-            }
-            .projects, .certifications {
-                gap: 15px;
-            }
-            .project, .certificate {
-                width: 100%;
-                max-width: 300px;
-                margin: 0 auto;
-            }
-            .btn {
-                padding: 8px 15px;
-                font-size: 0.9em;
-            }
-            .popup {
-                width: 85%; /* Slightly smaller */
-                max-width: 350px; /* Tighter fit */
-                padding: 15px;
-                max-height: 70vh; /* Smaller height */
-            }
-            .popup h2 {
-                font-size: 1.3em;
-            }
-            .popup p {
-                font-size: 0.9em;
-            }
+            header img { width: 120px; height: 120px; }
+            header h1 { font-size: 2.2em; }
+            header p { font-size: 1.1em; }
+            .section { padding: 15px; }
+            .section h2 { font-size: 1.5em; }
+            .card img { width: 180px; height: 100px; }
+            .popup { max-width: 400px; padding: 15px; }
         }
-
         @media (max-width: 480px) {
-            header {
-                padding: 20px 10px;
-            }
-            header img {
-                width: 80px;
-                height: 80px;
-            }
-            header h1 {
-                font-size: 1.5em;
-            }
-            header p {
-                font-size: 0.8em;
-            }
-            .section {
-                padding: 10px;
-            }
-            h2 {
-                font-size: 1em;
-            }
-            .project h3, .certificate h3 {
-                font-size: 0.9em;
-            }
-            .popup {
-                width: 90%;
-                max-width: 300px;
-                padding: 10px;
-                max-height: 60vh;
-            }
+            header { padding: 40px 10px; }
+            header img { width: 100px; height: 100px; }
+            header h1 { font-size: 1.8em; }
+            header p { font-size: 1em; }
+            .card img { width: 160px; height: 90px; }
+            .popup { max-width: 320px; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <img src="my image.jpg" alt="Ahsan Javed">
-        <h1>AHSAN JAVED</h1>
-        <p>Biomedical Engineer | Machine Learning Enthusiast</p>
-    </header>
+    <canvas id="bgCanvas"></canvas>
     <div class="container">
+        <header>
+            <div class="motion-graphics">
+                <canvas id="header-motion-canvas"></canvas>
+            </div>
+            <img src="my image.jpg" alt="Ahsan Javed">
+            <h1>AHSAN JAVED</h1>
+            <p>Biomedical Engineer | Machine Learning Enthusiast</p>
+        </header>
         <div class="section">
             <h2>About Me</h2>
-            <p class="about-text">Hey, I’m Ahsan Javed—a Biomedical Engineer who’s all about mixing tech with healthcare to make cool things happen. 
-                I’m hooked on Machine Learning, messing with biomedical signals, and digging into data to figure out stuff that
-                actually helps. Whether it’s building gadgets that make doctor stuff easier or crunching numbers to unlock
-                bio-secrets, I’m here for it. Check out my projects, certifications, and skills below, and hit me up if you wanna team up and make 
-                something for the world!</p>
+            <p>Hey, I’m Ahsan Javed—a Biomedical Engineer who’s all about mixing tech with healthcare to make cool things happen. I’m hooked on Machine Learning, messing with biomedical signals, and digging into data to figure out stuff that actually helps. Whether it’s building gadgets that make doctor stuff easier or crunching numbers to unlock bio-secrets, I’m here for it. Check out my projects, certifications, and skills below, and hit me up if you wanna team up and make something for the world!</p>
         </div>
         <div class="section">
             <h2>Projects</h2>
-            <div class="projects" id="projects-list"></div>
+            <div class="grid" id="projects">
+                <div class="motion-graphics">
+                    <canvas id="projects-motion-canvas"></canvas>
+                </div>
+            </div>
         </div>
         <div class="section">
             <h2>Machine Learning Projects</h2>
-            <div class="projects" id="ml-projects-list"></div>
+            <div class="grid" id="ml-projects">
+                <div class="motion-graphics">
+                    <canvas id="ml-projects-motion-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Internships</h2>
+            <div class="grid" id="internships">
+                <div class="motion-graphics">
+                    <canvas id="internships-motion-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Extra Curricular Participation</h2>
+            <div class="grid" id="extracurricular">
+                <div class="motion-graphics">
+                    <canvas id="extracurricular-motion-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Poster Presentations</h2>
+            <div class="grid" id="posters">
+                <div class="motion-graphics">
+                    <canvas id="posters-motion-canvas"></canvas>
+                </div>
+            </div>
         </div>
         <div class="section">
             <h2>Certifications</h2>
-            <div class="certifications" id="certifications-list"></div>
+            <div class="grid" id="certifications">
+                <div class="motion-graphics">
+                    <canvas id="certifications-motion-canvas"></canvas>
+                </div>
+            </div>
         </div>
         <div class="section">
             <h2>Skills</h2>
@@ -492,19 +333,117 @@
         <div class="section">
             <h2>Contact</h2>
             <p>Email: beingahsan12@gmail.com</p>
-            <p>GitHub: <a href="https://github.com/Ahsan12152003" target="_blank">https://github.com/Ahsan12152003</a></p>
-            <p>LinkedIn: <a href="https://www.linkedin.com/in/ahsan-javed-2093352b7/" target="_blank">https://www.linkedin.com/in/ahsan-javed-2093352b7/</a></p>
+            <p>GitHub: <a href="https://github.com/Ahsan12152003" target="_blank" class="btn">GitHub</a></p>
+            <p>LinkedIn: <a href="https://www.linkedin.com/in/ahsan-javed-2093352b7/" target="_blank" class="btn">LinkedIn</a></p>
         </div>
     </div>
-
     <div class="overlay" id="overlay"></div>
     <div class="popup" id="popup">
         <h2 id="popup-title"></h2>
         <p id="popup-description"></p>
+        <div id="popup-github" style="display: none;">
+            <a id="github-link" href="#" target="_blank" class="btn">View on GitHub</a>
+        </div>
         <button class="btn" onclick="closePopup()">Close</button>
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>
+        // Three.js Particle System for Background
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bgCanvas'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.position.z = 30;
+
+        const particleCount = 8000;
+        const particlesGeometry = new THREE.BufferGeometry();
+        const posArray = new Float32Array(particleCount * 3);
+        const velocities = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+
+        for (let i = 0; i < particleCount * 3; i += 3) {
+            posArray[i] = (Math.random() - 0.5) * 100;
+            posArray[i + 1] = (Math.random() - 0.5) * 100;
+            posArray[i + 2] = (Math.random() - 0.5) * 100;
+            velocities[i] = (Math.random() - 0.5) * 0.03;
+            velocities[i + 1] = (Math.random() - 0.5) * 0.03;
+            velocities[i + 2] = (Math.random() - 0.5) * 0.03;
+            const t = Math.random();
+            colors[i] = t * 0 + (1 - t) * 0;
+            colors[i + 1] = t * 0.83 + (1 - t) * 0.71;
+            colors[i + 2] = t * 1 + (1 - t) * 0.2;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        const particleMaterial = new THREE.PointsMaterial({
+            size: 0.1,
+            vertexColors: true,
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+        });
+        const particles = new THREE.Points(particlesGeometry, particleMaterial);
+        scene.add(particles);
+
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        function animateBackground() {
+            requestAnimationFrame(animateBackground);
+            const positions = particlesGeometry.attributes.position.array;
+            for (let i = 0; i < particleCount * 3; i += 3) {
+                positions[i] += velocities[i] + mouseX * 0.02;
+                positions[i + 1] += velocities[i + 1] + mouseY * 0.02;
+                positions[i + 2] += velocities[i + 2];
+                if (positions[i] > 50) positions[i] -= 100;
+                if (positions[i] < -50) positions[i] += 100;
+                if (positions[i + 1] > 50) positions[i + 1] -= 100;
+                if (positions[i + 1] < -50) positions[i + 1] += 100;
+                if (positions[i + 2] > 50) positions[i + 2] -= 100;
+                if (positions[i + 2] < -50) positions[i + 2] += 100;
+            }
+            particlesGeometry.attributes.position.needsUpdate = true;
+            particles.rotation.y += 0.001;
+            renderer.render(scene, camera);
+        }
+        animateBackground();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // GSAP Animations
+        gsap.utils.toArray('.section').forEach((section) => {
+            gsap.from(section, {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse',
+                },
+            });
+        });
+
+        gsap.utils.toArray('.card').forEach((card) => {
+            card.addEventListener('mouseenter', () => {
+                gsap.to(card, { scale: 1.05, duration: 0.3, ease: 'power2.out' });
+            });
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, { scale: 1, duration: 0.3, ease: 'power2.out' });
+            });
+        });
+
+        // Data from the first code, copied verbatim
         const projects = [
             { title: "Syringe Pump using Arduino", image: "syring pump.jpg", description: "This project involves designing a syringe pump using Arduino for precise fluid delivery.", github: "https://github.com/Ahsan12152003/Syringe-Pump-Using-Arduino" },
             { title: "RNA Mutation Detector with GUI", image: "rna mutation detector.jpg", description: "A GUI-based tool to detect RNA mutations using bioinformatics algorithms.", github: "https://github.com/Ahsan12152003/RNA-Mutation-Detector" },
@@ -514,19 +453,35 @@
             { title: "Water Level Indicator", image: "BE.jpg", description: "A simple water level indicator using sensors and LEDs.", github: "https://github.com/Ahsan12152003/Water-Level-Indicator-Without-Sensor" },
             { title: "Non Invasive Glucometer", image: "glucometer.jpg", description: "Predicting diabetes risk using BPM and SpO2 data.", github: "https://github.com/Ahsan12152003/Non-Invasive-Glucometer" }
         ];
-        
+
         const mlProjects = [
             { title: "Eye Open-Close Data Model", image: "eye model.jpg", description: "A machine learning model to detect eye open/close states from images.", github: "https://github.com/Ahsan12152003/Neurocomputation-Model-Training-ML" },
             { title: "Iris Flower Classification", image: "ml.jpg", description: "Classification of Iris flowers using machine learning algorithms.", github: "https://github.com/Ahsan12152003/Iris-Flower-Classification-ML-Model" },
             { title: "Predicting Diabetes with BPM and SpO2", image: "ml2.jpg", description: "Predicting diabetes risk using BPM and SpO2 data.", github: "https://github.com/Ahsan12152003/Predicting-Glucose-With-SPO2-And-BPM-ML-" },
             { title: "BMI Calculator & Health Risk Prediction", image: "bodymass.jpg", description: "A BMI calculator with health risk prediction using ML.", github: "https://github.com/Ahsan12152003/Health-Risk-Prediction-ML-Model" },
             { title: "Customer Churn Prediction", image: "churn.jpg", description: "Predicting customer churn using machine learning models.", github: "https://github.com/Ahsan12152003/Customer-Churn-Prediction-ML-model" },
-            { title: "Image Compression using K-Means", image: "image.jpg", description: "Image compression using the K-Means clustering algorithm.", github: "https://github.com/Ahsan12152003/Image-compression-using-K-means" }
+            { title: "Image Compression using K-Means", image: "kmeans.png", description: "Image compression using the K-Means clustering algorithm.", github: "https://github.com/Ahsan12152003/Image-compression-using-K-means" }
+        ];
+
+        const internships = [
+            { title: "Neurocomputation Lab", image: "ncl.png", description: "complete an one year internship gaining experience in data processing and training datasets." },
+            { title: "Abbasi Shaheed Hospital", image: "abbasi2.png", description: "Gained hands-on experience with diagnostic and therapeutic medical devices, enhancing my understanding of their real-time clinical applications." },
+            { title: "Ziauddin Hospital", image: "zia2.png", description: " Learned the working principles and maintenance protocols of biomedical equipment used in patient care." },
+            { title: "Indus Hospital", image: "indus1.png", description: "learned about device calibration and troubleshooting, deepening my practical knowledge of hospital-grade technologies." }
+        ];
+
+        const extracurricular = [
+            { title: "3rd International Biomedical And Digital Health Conference", image: "3ibdc.png", description: "Participated in the IBDC Conference, engaging in discussions and activities related to biomedical engineering." },
+            { title: "4th International Biomedical And Digital Health Conference", image: "4ibdc.png", description: "Attended the IBDC Conference, presented my poster presentation on my first electronic Y-Balance Device." }
+        ];
+
+        const posters = [
+            { title: "Electronic Y-Balance Poster Prsentation", image: "poster.png", description: "Presented a poster on our very own electronic y balance device, also share the data of our tested individuals." },
+            { title: "Development Of Vaccine Against Virus Poster Presentation", image: "post.png", description: "presented my research poster on development of vaccine against Malaria" }
         ];
 
         const certifications = [
-            { title: "Online ML Internship with Neurocomputation Lab", image: "intern.png", description: "Completed an online internship focusing on machine learning applications in neurocomputation." },
-            { title: "Bioinformatics Poster Presentation", image: "post.png", description: "Presented my research on vaccines against viruses." },
+            { title: "Excel By Microsoft", image: "microsoft.png", description: "Acquired skills in creating and managing data for companies." },
             { title: "Preparing Data for Machine Learning", image: "dataml.png", description: "Learned techniques for cleaning, transforming, and preparing data for machine learning models." },
             { title: "Python for Machine Learning", image: "data2.png", description: "Mastered Python programming for implementing machine learning algorithms and data analysis." },
             { title: "Data Science Foundations", image: "data3.png", description: "Gained foundational knowledge in data science, including statistics, visualization, and modeling." },
@@ -534,81 +489,189 @@
             { title: "Increase Engagement for Business", image: "engagement.png", description: "Explored strategies to boost customer engagement and retention in business contexts." },
             { title: "Google Ads for Beginners", image: "google.png", description: "Acquired skills in creating and managing Google Ads campaigns for marketing." }
         ];
-        
-        function loadProjects() {
-            const projectContainer = document.getElementById("projects-list");
-            projects.forEach(project => {
-                const projectDiv = document.createElement("div");
-                projectDiv.classList.add("project");
-                projectDiv.innerHTML = `
-                    <img src="${project.image}" alt="${project.title}">
-                    <h3>${project.title}</h3>
-                    <button class="btn" onclick="showDetails('${project.title}', '${project.description}', '${project.github}')">View Project</button>
-                `;
-                projectContainer.appendChild(projectDiv);
-            });
-            
-            const mlProjectContainer = document.getElementById("ml-projects-list");
-            mlProjects.forEach(project => {
-                const projectDiv = document.createElement("div");
-                projectDiv.classList.add("project");
-                projectDiv.innerHTML = `
-                    <img src="${project.image}" alt="${project.title}">
-                    <h3>${project.title}</h3>
-                    <button class="btn" onclick="showDetails('${project.title}', '${project.description}', '${project.github}')">View Project</button>
-                `;
-                mlProjectContainer.appendChild(projectDiv);
+
+        function loadContent() {
+            const sections = [
+                { id: 'projects', data: projects },
+                { id: 'ml-projects', data: mlProjects },
+                { id: 'internships', data: internships },
+                { id: 'extracurricular', data: extracurricular },
+                { id: 'posters', data: posters },
+                { id: 'certifications', data: certifications }
+            ];
+
+            sections.forEach(({ id, data }) => {
+                const container = document.getElementById(id);
+                const canvas = container.querySelector(`#${id}-motion-canvas`);
+                const motionScene = new THREE.Scene();
+                const motionCamera = new THREE.PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+                const motionRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+                motionRenderer.setSize(container.offsetWidth, container.offsetHeight);
+                motionCamera.position.z = 15;
+
+                const particleSystems = [];
+                const motionParticleCount = 500; // Moved to outer scope
+                data.forEach(item => {
+                    // Sanitize title for valid HTML ID
+                    const safeId = item.title.replace(/[^a-zA-Z0-9-]/g, '-').replace(/-+/g, '-');
+                    const div = document.createElement('div');
+                    div.className = 'card';
+                    div.innerHTML = `
+                        <img src="${item.image}" alt="${item.title}">
+                        <h3>${item.title}</h3>
+                        <button class="btn" onclick="showPopup('${item.title}', '${item.description}', '${item.github || ''}')">View Details</button>
+                    `;
+                    container.appendChild(div);
+
+                    // Create particle system for this card
+                    const motionGeometry = new THREE.BufferGeometry();
+                    const motionPosArray = new Float32Array(motionParticleCount * 3);
+                    for (let i = 0; i < motionParticleCount * 3; i += 3) {
+                        motionPosArray[i] = (Math.random() - 0.5) * 15;
+                        motionPosArray[i + 1] = (Math.random() - 0.5) * 15;
+                        motionPosArray[i + 2] = (Math.random() - 0.5) * 15;
+                    }
+                    motionGeometry.setAttribute('position', new THREE.BufferAttribute(motionPosArray, 3));
+                    const motionMaterial = new THREE.PointsMaterial({
+                        size: 0.2,
+                        color: 0x00b7cc,
+                        transparent: true,
+                        opacity: 0.8,
+                    });
+                    const motionParticles = new THREE.Points(motionGeometry, motionMaterial);
+
+                    // Position particles within the card's bounds
+                    motionParticles.userData.card = div;
+                    particleSystems.push(motionParticles);
+                    motionScene.add(motionParticles);
+                });
+
+                function animateMotion() {
+                    requestAnimationFrame(animateMotion);
+                    particleSystems.forEach((particles, index) => {
+                        const card = particles.userData.card;
+                        const rect = card.getBoundingClientRect();
+                        const containerRect = container.getBoundingClientRect();
+                        const x = ((rect.left + rect.right) / 2 - (containerRect.left + containerRect.right) / 2) / containerRect.width * 15;
+                        const y = -((rect.top + rect.bottom) / 2 - (containerRect.top + containerRect.bottom) / 2) / containerRect.height * 15;
+                        particles.position.set(x, y, 0);
+
+                        const positions = particles.geometry.attributes.position.array;
+                        for (let i = 0; i < motionParticleCount * 3; i += 3) {
+                            positions[i] += (Math.random() - 0.5) * 0.04;
+                            positions[i + 1] += (Math.random() - 0.5) * 0.04;
+                            positions[i + 2] += (Math.random() - 0.5) * 0.02;
+                            if (positions[i] > 7.5) positions[i] -= 15;
+                            if (positions[i] < -7.5) positions[i] += 15;
+                            if (positions[i + 1] > 7.5) positions[i + 1] -= 15;
+                            if (positions[i + 1] < -7.5) positions[i + 1] += 15;
+                            if (positions[i + 2] > 7.5) positions[i + 2] -= 15;
+                            if (positions[i + 2] < -7.5) positions[i + 2] += 15;
+                        }
+                        particles.geometry.attributes.position.needsUpdate = true;
+                        particles.rotation.x += 0.002;
+                        particles.rotation.y += 0.002;
+                    });
+                    motionRenderer.render(motionScene, motionCamera);
+                }
+                animateMotion();
+
+                window.addEventListener('resize', () => {
+                    motionCamera.aspect = container.offsetWidth / container.offsetHeight;
+                    motionCamera.updateProjectionMatrix();
+                    motionRenderer.setSize(container.offsetWidth, container.offsetHeight);
+                });
             });
 
-            const certContainer = document.getElementById("certifications-list");
-            certifications.forEach(cert => {
-                const certDiv = document.createElement("div");
-                certDiv.classList.add("certificate");
-                certDiv.innerHTML = `
-                    <img src="${cert.image}" alt="${cert.title}">
-                    <h3>${cert.title}</h3>
-                    <button class="btn" onclick="showDetails('${cert.title}', '${cert.description}')">View Details</button>
-                `;
-                certContainer.appendChild(certDiv);
+            // Header 3D motion graphics
+            const headerCanvas = document.getElementById('header-motion-canvas');
+            const headerScene = new THREE.Scene();
+            const headerCamera = new THREE.PerspectiveCamera(75, 900 / 240, 0.1, 1000);
+            const headerRenderer = new THREE.WebGLRenderer({ canvas: headerCanvas, alpha: true });
+            headerRenderer.setSize(900, 240);
+            headerCamera.position.z = 20;
+
+            const headerParticleCount = 1500;
+            const headerGeometry = new THREE.BufferGeometry();
+            const headerPosArray = new Float32Array(headerParticleCount * 3);
+            for (let i = 0; i < headerParticleCount * 3; i += 3) {
+                headerPosArray[i] = (Math.random() - 0.5) * 25;
+                headerPosArray[i + 1] = (Math.random() - 0.5) * 25;
+                headerPosArray[i + 2] = (Math.random() - 0.5) * 25;
+            }
+            headerGeometry.setAttribute('position', new THREE.BufferAttribute(headerPosArray, 3));
+            const headerMaterial = new THREE.PointsMaterial({
+                size: 0.25,
+                color: 0x00b7cc,
+                transparent: true,
+                opacity: 0.7,
             });
-        }
-        
-        function showDetails(title, description, github = null) {
-            const popup = document.getElementById("popup");
-            const overlay = document.getElementById("overlay");
-            popup.innerHTML = `
-                <h2>${title}</h2>
-                <p>${description}</p>
-                ${github ? `<a href="${github}" target="_blank" class="btn">View on GitHub</a>` : ''}
-                <button class="btn" onclick="closePopup()">Close</button>
-            `;
-            popup.classList.add("visible");
-            overlay.classList.add("visible");
-        }
-        
-        function closePopup() {
-            const popup = document.getElementById("popup");
-            const overlay = document.getElementById("overlay");
-            popup.classList.remove("visible");
-            overlay.classList.remove("visible");
-        }
-        
-        function revealSections() {
-            const sections = document.querySelectorAll(".section");
-            sections.forEach(section => {
-                const sectionTop = section.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                if (sectionTop < windowHeight - 100) {
-                    section.classList.add("visible");
+            const headerParticles = new THREE.Points(headerGeometry, headerMaterial);
+            headerScene.add(headerParticles);
+
+            function animateHeader() {
+                requestAnimationFrame(animateHeader);
+                const positions = headerGeometry.attributes.position.array;
+                for (let i = 0; i < headerParticleCount * 3; i += 3) {
+                    positions[i] += (Math.random() - 0.5) * 0.08;
+                    positions[i + 1] = (Math.random() - 0.5) * 0.08;
+                    positions[i + 2] += (Math.random() - 0.5) * 0.04;
+                    if (positions[i] > 12.5) positions[i] -= 25;
+                    if (positions[i] < -12.5) positions[i] += 25;
+                    if (positions[i + 1] > 12.5) positions[i + 1] -= 25;
+                    if (positions[i + 1] < -12.5) positions[i + 1] += 25;
+                    if (positions[i + 2] > 12.5) positions[i + 2] -= 25;
+                    if (positions[i + 2] < -12.5) positions[i + 2] += 25;
                 }
+                headerGeometry.attributes.position.needsUpdate = true;
+                headerParticles.rotation.x += 0.003;
+                headerParticles.rotation.y += 0.003;
+                headerRenderer.render(headerScene, headerCamera);
+            }
+            animateHeader();
+
+            // Re-apply GSAP for dynamically added cards
+            gsap.utils.toArray('.card').forEach((card) => {
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, { scale: 1.05, duration: 0.3, ease: 'power2.out' });
+                });
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, { scale: 1, duration: 0.3, ease: 'power2.out' });
+                });
             });
         }
-        
-        window.onload = () => {
-            loadProjects();
-            revealSections();
-        };
-        window.addEventListener("scroll", revealSections);
+
+        function showPopup(title, description, github) {
+            const popup = document.getElementById('popup');
+            const overlay = document.getElementById('overlay');
+            document.getElementById('popup-title').textContent = title;
+            document.getElementById('popup-description').textContent = description;
+            const githubDiv = document.getElementById('popup-github');
+            const githubLink = document.getElementById('github-link');
+            if (github) {
+                githubDiv.style.display = 'block';
+                githubLink.href = github;
+            } else {
+                githubDiv.style.display = 'none';
+            }
+            popup.classList.add('visible');
+            overlay.classList.add('visible');
+            gsap.fromTo(popup, { scale: 0 }, { scale: 1, duration: 0.5, ease: 'back.out(1.7)' });
+            gsap.fromTo(overlay, { opacity: 0 }, { opacity: 1, duration: 0.5 });
+        }
+
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            const overlay = document.getElementById('overlay');
+            gsap.to(popup, { scale: 0, duration: 0.5, ease: 'back.in(1.7)', onComplete: () => {
+                popup.classList.remove('visible');
+            }});
+            gsap.to(overlay, { opacity: 0, duration: 0.5, onComplete: () => {
+                overlay.classList.remove('visible');
+            }});
+        }
+
+        window.onload = loadContent;
     </script>
 </body>
 </html>
