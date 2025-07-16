@@ -56,12 +56,12 @@
             border-radius: 50%;
             border: 4px solid #00b7cc;
             box-shadow: 0 0 20px rgba(0, 150, 200, 0.6);
-            transition: transform 0.5s ease;
+            transition: transform 0.3s ease;
             position: relative;
             z-index: 1;
         }
         header img:hover {
-            transform: scale(1.15) rotate(10deg);
+            transform: scale(1.1) rotate(8deg);
         }
         header h1 {
             font-size: 2.8em;
@@ -69,7 +69,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 20px rgba(0, 150, 200, 0.5);
+            text-shadow: 0 0 15px rgba(0, 150, 200, 0.5);
             margin: 15px 0;
             animation: textGlow 3s infinite ease-in-out;
             position: relative;
@@ -89,10 +89,10 @@
             box-shadow: 0 8px 30px rgba(0, 150, 200, 0.3);
             position: relative;
             overflow: hidden;
-            transition: transform 0.5s ease;
+            transition: transform 0.3s ease;
         }
         .section:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
         }
         .section h2 {
             font-size: 1.8em;
@@ -115,15 +115,15 @@
             border: 2px solid rgba(0, 150, 200, 0.4);
             box-shadow: 0 5px 20px rgba(0, 150, 200, 0.2);
             text-align: center;
-            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             min-height: 280px;
             position: relative;
             overflow: hidden;
             z-index: 1;
         }
         .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0, 150, 200, 0.4);
+            transform: scale(1.03);
+            box-shadow: 0 8px 25px rgba(0, 150, 200, 0.4);
             border-color: #ffca28;
         }
         .card img {
@@ -132,12 +132,12 @@
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 15px;
-            transition: transform 0.5s ease;
+            transition: transform 0.3s ease;
             position: relative;
             z-index: 1;
         }
         .card:hover img {
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
         .card h3 {
             font-size: 1.2em;
@@ -153,11 +153,11 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            opacity: 0.6;
-            transition: opacity 0.5s ease;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
         }
         .section:hover .motion-graphics {
-            opacity: 0.9;
+            opacity: 0.8;
         }
         .motion-graphics canvas {
             position: absolute;
@@ -173,14 +173,14 @@
             color: #ffffff;
             border-radius: 6px;
             text-decoration: none;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
             position: relative;
             z-index: 1;
             overflow: hidden;
         }
         .btn:hover {
             background: linear-gradient(45deg, #ffca28, #ffb74d);
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
         .popup {
             position: fixed;
@@ -203,7 +203,7 @@
         .popup.visible {
             display: block;
             transform: translate(-50%, -50%) scale(1);
-            transition: transform 0.5s ease;
+            transition: transform 0.3s ease;
         }
         .popup h2 {
             font-size: 1.6em;
@@ -228,7 +228,7 @@
             z-index: 999;
             display: none;
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.3s ease;
         }
         .overlay.visible {
             display: block;
@@ -236,13 +236,13 @@
         }
         @keyframes pulseGlow {
             0% { opacity: 0.3; transform: scale(0.9); }
-            50% { opacity: 0.5; transform: scale(1.1); }
+            50% { opacity: 0.5; transform: scale(1.05); }
             100% { opacity: 0.3; transform: scale(0.9); }
         }
         @keyframes textGlow {
-            0% { text-shadow: 0 0 15px rgba(0, 150, 200, 0.5); }
-            50% { text-shadow: 0 0 30px rgba(0, 150, 200, 0.7); }
-            100% { text-shadow: 0 0 15px rgba(0, 150, 200, 0.5); }
+            0% { text-shadow: 0 0 10px rgba(0, 150, 200, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(0, 150, 200, 0.7); }
+            100% { text-shadow: 0 0 10px rgba(0, 150, 200, 0.5); }
         }
         @media (max-width: 768px) {
             header img { width: 120px; height: 120px; }
@@ -252,6 +252,7 @@
             .section h2 { font-size: 1.5em; }
             .card img { width: 180px; height: 100px; }
             .popup { max-width: 400px; padding: 15px; }
+            .motion-graphics { opacity: 0.4; }
         }
         @media (max-width: 480px) {
             header { padding: 40px 10px; }
@@ -260,6 +261,7 @@
             header p { font-size: 1em; }
             .card img { width: 160px; height: 90px; }
             .popup { max-width: 320px; }
+            .motion-graphics { opacity: 0.3; }
         }
     </style>
 </head>
@@ -350,6 +352,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>
+        // Utility: Debounce function to throttle resize events
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
         // Three.js Particle System for Background
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -357,7 +372,7 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         camera.position.z = 30;
 
-        const particleCount = 8000;
+        const particleCount = 4000; // Reduced from 8000
         const particlesGeometry = new THREE.BufferGeometry();
         const posArray = new Float32Array(particleCount * 3);
         const velocities = new Float32Array(particleCount * 3);
@@ -367,9 +382,9 @@
             posArray[i] = (Math.random() - 0.5) * 100;
             posArray[i + 1] = (Math.random() - 0.5) * 100;
             posArray[i + 2] = (Math.random() - 0.5) * 100;
-            velocities[i] = (Math.random() - 0.5) * 0.03;
-            velocities[i + 1] = (Math.random() - 0.5) * 0.03;
-            velocities[i + 2] = (Math.random() - 0.5) * 0.03;
+            velocities[i] = (Math.random() - 0.5) * 0.02; // Reduced from 0.03
+            velocities[i + 1] = (Math.random() - 0.5) * 0.02;
+            velocities[i + 2] = (Math.random() - 0.5) * 0.02;
             const t = Math.random();
             colors[i] = t * 0 + (1 - t) * 0;
             colors[i + 1] = t * 0.83 + (1 - t) * 0.71;
@@ -379,7 +394,7 @@
         particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
         particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
         const particleMaterial = new THREE.PointsMaterial({
-            size: 0.1,
+            size: 0.08, // Reduced from 0.1
             vertexColors: true,
             transparent: true,
             blending: THREE.AdditiveBlending,
@@ -397,8 +412,8 @@
             requestAnimationFrame(animateBackground);
             const positions = particlesGeometry.attributes.position.array;
             for (let i = 0; i < particleCount * 3; i += 3) {
-                positions[i] += velocities[i] + mouseX * 0.02;
-                positions[i + 1] += velocities[i + 1] + mouseY * 0.02;
+                positions[i] += velocities[i] + mouseX * 0.015; // Reduced from 0.02
+                positions[i + 1] += velocities[i + 1] + mouseY * 0.015;
                 positions[i + 2] += velocities[i + 2];
                 if (positions[i] > 50) positions[i] -= 100;
                 if (positions[i] < -50) positions[i] += 100;
@@ -408,42 +423,35 @@
                 if (positions[i + 2] < -50) positions[i + 2] += 100;
             }
             particlesGeometry.attributes.position.needsUpdate = true;
-            particles.rotation.y += 0.001;
+            particles.rotation.y += 0.0005; // Reduced from 0.001
             renderer.render(scene, camera);
         }
         animateBackground();
 
-        window.addEventListener('resize', () => {
+        // Debounced resize handler
+        const handleResize = debounce(() => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
-        });
+        }, 100);
+        window.addEventListener('resize', handleResize);
 
         // GSAP Animations
         gsap.utils.toArray('.section').forEach((section) => {
             gsap.from(section, {
                 opacity: 0,
-                y: 50,
-                duration: 1,
-                ease: 'power3.out',
+                y: 30, // Reduced from 50
+                duration: 0.8, // Reduced from 1
+                ease: 'power2.out',
                 scrollTrigger: {
                     trigger: section,
-                    start: 'top 85%',
+                    start: 'top 90%',
                     toggleActions: 'play none none reverse',
                 },
             });
         });
 
-        gsap.utils.toArray('.card').forEach((card) => {
-            card.addEventListener('mouseenter', () => {
-                gsap.to(card, { scale: 1.05, duration: 0.3, ease: 'power2.out' });
-            });
-            card.addEventListener('mouseleave', () => {
-                gsap.to(card, { scale: 1, duration: 0.3, ease: 'power2.out' });
-            });
-        });
-
-        // Data from the first code, copied verbatim
+        // Data from the first code, with typo fixed
         const projects = [
             { title: "Syringe Pump using Arduino", image: "syring pump.jpg", description: "This project involves designing a syringe pump using Arduino for precise fluid delivery.", github: "https://github.com/Ahsan12152003/Syringe-Pump-Using-Arduino" },
             { title: "RNA Mutation Detector with GUI", image: "rna mutation detector.jpg", description: "A GUI-based tool to detect RNA mutations using bioinformatics algorithms.", github: "https://github.com/Ahsan12152003/RNA-Mutation-Detector" },
@@ -464,10 +472,10 @@
         ];
 
         const internships = [
-            { title: "Neurocomputation Lab", image: "ncl.png", description: "complete an one year internship gaining experience in data processing and training datasets." },
+            { title: "Neurocomputation Lab", image: "ncl.png", description: "Completed a one-year internship gaining experience in data processing and training datasets." },
             { title: "Abbasi Shaheed Hospital", image: "abbasi2.png", description: "Gained hands-on experience with diagnostic and therapeutic medical devices, enhancing my understanding of their real-time clinical applications." },
-            { title: "Ziauddin Hospital", image: "zia2.png", description: " Learned the working principles and maintenance protocols of biomedical equipment used in patient care." },
-            { title: "Indus Hospital", image: "indus1.png", description: "learned about device calibration and troubleshooting, deepening my practical knowledge of hospital-grade technologies." }
+            { title: "Ziauddin Hospital", image: "zia2.png", description: "Learned the working principles and maintenance protocols of biomedical equipment used in patient care." },
+            { title: "Indus Hospital", image: "indus1.png", description: "Learned about device calibration and troubleshooting, deepening my practical knowledge of hospital-grade technologies." }
         ];
 
         const extracurricular = [
@@ -476,8 +484,8 @@
         ];
 
         const posters = [
-            { title: "Electronic Y-Balance Poster Prsentation", image: "poster.png", description: "Presented a poster on our very own electronic y balance device, also share the data of our tested individuals." },
-            { title: "Development Of Vaccine Against Virus Poster Presentation", image: "post.png", description: "presented my research poster on development of vaccine against Malaria" }
+            { title: "Electronic Y-Balance Poster Presentation", image: "poster.png", description: "Presented a poster on our very own electronic Y-balance device, also shared the data of our tested individuals." },
+            { title: "Development Of Vaccine Against Virus Poster Presentation", image: "post.png", description: "Presented my research poster on development of vaccine against Malaria." }
         ];
 
         const certifications = [
@@ -503,84 +511,102 @@
             sections.forEach(({ id, data }) => {
                 const container = document.getElementById(id);
                 const canvas = container.querySelector(`#${id}-motion-canvas`);
-                const motionScene = new THREE.Scene();
-                const motionCamera = new THREE.PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-                const motionRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
-                motionRenderer.setSize(container.offsetWidth, container.offsetHeight);
-                motionCamera.position.z = 15;
+                let motionScene, motionCamera, motionRenderer, particleSystems = [];
 
-                const particleSystems = [];
-                const motionParticleCount = 500; // Moved to outer scope
-                data.forEach(item => {
-                    // Sanitize title for valid HTML ID
-                    const safeId = item.title.replace(/[^a-zA-Z0-9-]/g, '-').replace(/-+/g, '-');
-                    const div = document.createElement('div');
-                    div.className = 'card';
-                    div.innerHTML = `
-                        <img src="${item.image}" alt="${item.title}">
-                        <h3>${item.title}</h3>
-                        <button class="btn" onclick="showPopup('${item.title}', '${item.description}', '${item.github || ''}')">View Details</button>
-                    `;
-                    container.appendChild(div);
-
-                    // Create particle system for this card
-                    const motionGeometry = new THREE.BufferGeometry();
-                    const motionPosArray = new Float32Array(motionParticleCount * 3);
-                    for (let i = 0; i < motionParticleCount * 3; i += 3) {
-                        motionPosArray[i] = (Math.random() - 0.5) * 15;
-                        motionPosArray[i + 1] = (Math.random() - 0.5) * 15;
-                        motionPosArray[i + 2] = (Math.random() - 0.5) * 15;
-                    }
-                    motionGeometry.setAttribute('position', new THREE.BufferAttribute(motionPosArray, 3));
-                    const motionMaterial = new THREE.PointsMaterial({
-                        size: 0.2,
-                        color: 0x00b7cc,
-                        transparent: true,
-                        opacity: 0.8,
-                    });
-                    const motionParticles = new THREE.Points(motionGeometry, motionMaterial);
-
-                    // Position particles within the card's bounds
-                    motionParticles.userData.card = div;
-                    particleSystems.push(motionParticles);
-                    motionScene.add(motionParticles);
-                });
-
-                function animateMotion() {
-                    requestAnimationFrame(animateMotion);
-                    particleSystems.forEach((particles, index) => {
-                        const card = particles.userData.card;
-                        const rect = card.getBoundingClientRect();
-                        const containerRect = container.getBoundingClientRect();
-                        const x = ((rect.left + rect.right) / 2 - (containerRect.left + containerRect.right) / 2) / containerRect.width * 15;
-                        const y = -((rect.top + rect.bottom) / 2 - (containerRect.top + containerRect.bottom) / 2) / containerRect.height * 15;
-                        particles.position.set(x, y, 0);
-
-                        const positions = particles.geometry.attributes.position.array;
-                        for (let i = 0; i < motionParticleCount * 3; i += 3) {
-                            positions[i] += (Math.random() - 0.5) * 0.04;
-                            positions[i + 1] += (Math.random() - 0.5) * 0.04;
-                            positions[i + 2] += (Math.random() - 0.5) * 0.02;
-                            if (positions[i] > 7.5) positions[i] -= 15;
-                            if (positions[i] < -7.5) positions[i] += 15;
-                            if (positions[i + 1] > 7.5) positions[i + 1] -= 15;
-                            if (positions[i + 1] < -7.5) positions[i + 1] += 15;
-                            if (positions[i + 2] > 7.5) positions[i + 2] -= 15;
-                            if (positions[i + 2] < -7.5) positions[i + 2] += 15;
-                        }
-                        particles.geometry.attributes.position.needsUpdate = true;
-                        particles.rotation.x += 0.002;
-                        particles.rotation.y += 0.002;
-                    });
-                    motionRenderer.render(motionScene, motionCamera);
-                }
-                animateMotion();
-
-                window.addEventListener('resize', () => {
-                    motionCamera.aspect = container.offsetWidth / container.offsetHeight;
-                    motionCamera.updateProjectionMatrix();
+                // Only enable animations for Projects and ML Projects
+                if (['projects', 'ml-projects'].includes(id)) {
+                    motionScene = new THREE.Scene();
+                    motionCamera = new THREE.PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+                    motionRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
                     motionRenderer.setSize(container.offsetWidth, container.offsetHeight);
-                });
+                    motionCamera.position.z = 15;
+
+                    const motionParticleCount = window.innerWidth <= 768 ? 200 : 300; // Dynamic particle count for mobile
+                    data.forEach(item => {
+                        // Sanitize title for valid HTML ID
+                        const safeId = item.title.replace(/[^a-zA-Z0-9-]/g, '-').replace(/-+/g, '-');
+                        const div = document.createElement('div');
+                        div.className = 'card';
+                        div.innerHTML = `
+                            <img src="${item.image}" alt="${item.title}">
+                            <h3>${item.title}</h3>
+                            <button class="btn" onclick="showPopup('${item.title}', '${item.description}', '${item.github || ''}')">View Details</button>
+                        `;
+                        container.appendChild(div);
+
+                        // Create particle system for this card
+                        const motionGeometry = new THREE.BufferGeometry();
+                        const motionPosArray = new Float32Array(motionParticleCount * 3);
+                        for (let i = 0; i < motionParticleCount * 3; i += 3) {
+                            motionPosArray[i] = (Math.random() - 0.5) * 15;
+                            motionPosArray[i + 1] = (Math.random() - 0.5) * 15;
+                            motionPosArray[i + 2] = (Math.random() - 0.5) * 15;
+                        }
+                        motionGeometry.setAttribute('position', new THREE.BufferAttribute(motionPosArray, 3));
+                        const motionMaterial = new THREE.PointsMaterial({
+                            size: window.innerWidth <= 768 ? 0.15 : 0.2, // Smaller particles on mobile
+                            color: 0x00b7cc,
+                            transparent: true,
+                            opacity: window.innerWidth <= 768 ? 0.6 : 0.8,
+                        });
+                        const motionParticles = new THREE.Points(motionGeometry, motionMaterial);
+
+                        // Position particles within the card's bounds
+                        motionParticles.userData.card = div;
+                        particleSystems.push(motionParticles);
+                        motionScene.add(motionParticles);
+                    });
+
+                    function animateMotion() {
+                        requestAnimationFrame(animateMotion);
+                        particleSystems.forEach((particles, index) => {
+                            const card = particles.userData.card;
+                            const rect = card.getBoundingClientRect();
+                            const containerRect = container.getBoundingClientRect();
+                            const x = ((rect.left + rect.right) / 2 - (containerRect.left + containerRect.right) / 2) / containerRect.width * 15;
+                            const y = -((rect.top + rect.bottom) / 2 - (containerRect.top + containerRect.bottom) / 2) / containerRect.height * 15;
+                            particles.position.set(x, y, 0);
+
+                            const positions = particles.geometry.attributes.position.array;
+                            const speed = window.innerWidth <= 768 ? 0.02 : 0.03; // Slower on mobile
+                            for (let i = 0; i < motionParticleCount * 3; i += 3) {
+                                positions[i] += (Math.random() - 0.5) * speed;
+                                positions[i + 1] += (Math.random() - 0.5) * speed;
+                                positions[i + 2] += (Math.random() - 0.5) * (speed / 2);
+                                if (positions[i] > 7.5) positions[i] -= 15;
+                                if (positions[i] < -7.5) positions[i] += 15;
+                                if (positions[i + 1] > 7.5) positions[i + 1] -= 15;
+                                if (positions[i + 1] < -7.5) positions[i + 1] += 15;
+                                if (positions[i + 2] > 7.5) positions[i + 2] -= 15;
+                                if (positions[i + 2] < -7.5) positions[i + 2] += 15;
+                            }
+                            particles.geometry.attributes.position.needsUpdate = true;
+                            particles.rotation.x += 0.001; // Reduced from 0.002
+                            particles.rotation.y += 0.001;
+                        });
+                        motionRenderer.render(motionScene, motionCamera);
+                    }
+                    animateMotion();
+
+                    window.addEventListener('resize', debounce(() => {
+                        motionCamera.aspect = container.offsetWidth / container.offsetHeight;
+                        motionCamera.updateProjectionMatrix();
+                        motionRenderer.setSize(container.offsetWidth, container.offsetHeight);
+                    }, 100));
+                } else {
+                    // Render cards without animations for other sections
+                    data.forEach(item => {
+                        const safeId = item.title.replace(/[^a-zA-Z0-9-]/g, '-').replace(/-+/g, '-');
+                        const div = document.createElement('div');
+                        div.className = 'card';
+                        div.innerHTML = `
+                            <img src="${item.image}" alt="${item.title}">
+                            <h3>${item.title}</h3>
+                            <button class="btn" onclick="showPopup('${item.title}', '${item.description}', '${item.github || ''}')">View Details</button>
+                        `;
+                        container.appendChild(div);
+                    });
+                }
             });
 
             // Header 3D motion graphics
@@ -591,7 +617,7 @@
             headerRenderer.setSize(900, 240);
             headerCamera.position.z = 20;
 
-            const headerParticleCount = 1500;
+            const headerParticleCount = window.innerWidth <= 768 ? 800 : 1000; // Reduced from 1500
             const headerGeometry = new THREE.BufferGeometry();
             const headerPosArray = new Float32Array(headerParticleCount * 3);
             for (let i = 0; i < headerParticleCount * 3; i += 3) {
@@ -601,10 +627,10 @@
             }
             headerGeometry.setAttribute('position', new THREE.BufferAttribute(headerPosArray, 3));
             const headerMaterial = new THREE.PointsMaterial({
-                size: 0.25,
+                size: window.innerWidth <= 768 ? 0.2 : 0.25, // Smaller on mobile
                 color: 0x00b7cc,
                 transparent: true,
-                opacity: 0.7,
+                opacity: window.innerWidth <= 768 ? 0.5 : 0.7,
             });
             const headerParticles = new THREE.Points(headerGeometry, headerMaterial);
             headerScene.add(headerParticles);
@@ -612,10 +638,11 @@
             function animateHeader() {
                 requestAnimationFrame(animateHeader);
                 const positions = headerGeometry.attributes.position.array;
+                const speed = window.innerWidth <= 768 ? 0.04 : 0.06; // Adjusted for mobile
                 for (let i = 0; i < headerParticleCount * 3; i += 3) {
-                    positions[i] += (Math.random() - 0.5) * 0.08;
-                    positions[i + 1] = (Math.random() - 0.5) * 0.08;
-                    positions[i + 2] += (Math.random() - 0.5) * 0.04;
+                    positions[i] += (Math.random() - 0.5) * speed;
+                    positions[i + 1] += (Math.random() - 0.5) * speed;
+                    positions[i + 2] += (Math.random() - 0.5) * (speed / 2);
                     if (positions[i] > 12.5) positions[i] -= 25;
                     if (positions[i] < -12.5) positions[i] += 25;
                     if (positions[i + 1] > 12.5) positions[i + 1] -= 25;
@@ -624,8 +651,8 @@
                     if (positions[i + 2] < -12.5) positions[i + 2] += 25;
                 }
                 headerGeometry.attributes.position.needsUpdate = true;
-                headerParticles.rotation.x += 0.003;
-                headerParticles.rotation.y += 0.003;
+                headerParticles.rotation.x += 0.0015; // Reduced from 0.003
+                headerParticles.rotation.y += 0.0015;
                 headerRenderer.render(headerScene, headerCamera);
             }
             animateHeader();
@@ -633,10 +660,10 @@
             // Re-apply GSAP for dynamically added cards
             gsap.utils.toArray('.card').forEach((card) => {
                 card.addEventListener('mouseenter', () => {
-                    gsap.to(card, { scale: 1.05, duration: 0.3, ease: 'power2.out' });
+                    gsap.to(card, { scale: 1.03, duration: 0.2, ease: 'power2.out' });
                 });
                 card.addEventListener('mouseleave', () => {
-                    gsap.to(card, { scale: 1, duration: 0.3, ease: 'power2.out' });
+                    gsap.to(card, { scale: 1, duration: 0.2, ease: 'power2.out' });
                 });
             });
         }
@@ -656,17 +683,17 @@
             }
             popup.classList.add('visible');
             overlay.classList.add('visible');
-            gsap.fromTo(popup, { scale: 0 }, { scale: 1, duration: 0.5, ease: 'back.out(1.7)' });
-            gsap.fromTo(overlay, { opacity: 0 }, { opacity: 1, duration: 0.5 });
+            gsap.fromTo(popup, { scale: 0 }, { scale: 1, duration: 0.3, ease: 'back.out(1.5)' });
+            gsap.fromTo(overlay, { opacity: 0 }, { opacity: 1, duration: 0.3 });
         }
 
         function closePopup() {
             const popup = document.getElementById('popup');
             const overlay = document.getElementById('overlay');
-            gsap.to(popup, { scale: 0, duration: 0.5, ease: 'back.in(1.7)', onComplete: () => {
+            gsap.to(popup, { scale: 0, duration: 0.3, ease: 'back.in(1.5)', onComplete: () => {
                 popup.classList.remove('visible');
             }});
-            gsap.to(overlay, { opacity: 0, duration: 0.5, onComplete: () => {
+            gsap.to(overlay, { opacity: 0, duration: 0.3, onComplete: () => {
                 overlay.classList.remove('visible');
             }});
         }
